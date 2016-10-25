@@ -1,5 +1,5 @@
 #pragma once
-#include <Windows.h>
+//#include <Windows.h>
 #include <Wbemidl.h>
 
 IWbemServices* wmiInit();
