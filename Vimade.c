@@ -66,7 +66,7 @@ BOOLEAN isVM_NetworkAdapterName()
 {
 	DWORD rv, Size = 15000;
 	PIP_ADAPTER_ADDRESSES AdapterAddresses = NULL;
-	BOOLEAN Result = FALSE;
+	BOOLEAN Result = TRUE;
 
 	rv = GetAdaptersAddresses(AF_UNSPEC, GAA_FLAG_INCLUDE_PREFIX, NULL, NULL, &Size);
 	AdapterAddresses = (IP_ADAPTER_ADDRESSES *)malloc(Size);
@@ -84,9 +84,10 @@ BOOLEAN isVM_NetworkAdapterName()
 		if (Size > 0)
 		{
 			printf("\t%ls\n", AdapterAddresses->Description);
-			if (StrStrI(AdapterAddresses->Description, L"Virtual"))
+			// detect if there is no real network adapter.
+			if (!StrStrI(AdapterAddresses->Description, L"Virtual") && !StrStrI(AdapterAddresses->Description, L"loopback"))
 			{
-				Result = TRUE;
+				Result = FALSE;
 			}
 		}
 		AdapterAddresses = AdapterAddresses->Next;
