@@ -23,6 +23,13 @@ int main()
 		dropFile("NetworkAdapterName_contains_Virtual");
 	}	
 
+    printf("\nCheck %d\n--------\n", ++CheckNum);
+    if (isVM_DeviceRegistry())
+    {
+        printf("DETECTED!\n");
+        dropFile("SystemDevicesName_contains_Virtual");
+    }
+
 	printf("\n\n");
 	wmiClean(pSvc);
 
